@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `categorias`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorias` (
-  `id_categoria` varchar(10) NOT NULL,
+  `id_categoria` varchar(20) NOT NULL,
   PRIMARY KEY (`id_categoria`),
   UNIQUE KEY `id_categoria_UNIQUE` (`id_categoria`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -37,6 +37,7 @@ CREATE TABLE `categorias` (
 
 LOCK TABLES `categorias` WRITE;
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
+INSERT INTO `categorias` VALUES ('documentales'),('filosofia'),('mecanica'),('musica'),('nautica'),('peliculas'),('solo deporte');
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -50,19 +51,19 @@ DROP TABLE IF EXISTS `notas`;
 CREATE TABLE `notas` (
   `id_notas` int NOT NULL AUTO_INCREMENT,
   `titulo` varchar(100) NOT NULL,
-  `date_created` date NOT NULL,
-  `date_modif` date NOT NULL,
+  `date_created` date DEFAULT NULL,
+  `date_modif` date DEFAULT NULL,
   `descripcion` varchar(2000) DEFAULT NULL,
   `locked` varchar(2) DEFAULT NULL,
-  `fk_id_categoria` varchar(10) DEFAULT NULL,
+  `fk_id_categoria` varchar(25) DEFAULT NULL,
   `fk_id_usuario` int NOT NULL,
   PRIMARY KEY (`id_notas`),
   UNIQUE KEY `id_notas_UNIQUE` (`id_notas`),
   KEY `fk_categorias_idx` (`fk_id_categoria`),
   KEY `fk_usuario_idx` (`fk_id_usuario`),
-  CONSTRAINT `fk_categorias` FOREIGN KEY (`fk_id_categoria`) REFERENCES `categorias` (`id_categoria`),
+  CONSTRAINT `fk_categorias` FOREIGN KEY (`fk_id_categoria`) REFERENCES `categorias` (`id_categoria`) ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario` FOREIGN KEY (`fk_id_usuario`) REFERENCES `usuarios` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,6 +72,7 @@ CREATE TABLE `notas` (
 
 LOCK TABLES `notas` WRITE;
 /*!40000 ALTER TABLE `notas` DISABLE KEYS */;
+INSERT INTO `notas` VALUES (2,'La vida al aire libre','2021-11-07',NULL,'lorem ipsum','no','filosofia',6),(3,'La vida al aire libre','2021-11-07',NULL,'lorem ipsum','no','filosofia',6),(4,'PEPE CENTURION','2021-11-07',NULL,'CORRIENDO CARRERAS POR EL AUTODROMO ALCANZÓ MUCHOS RECORDS EN CAMPEONATOS','no','solo deporte',8),(6,'la ley del mas fuerte','2021-11-07',NULL,'pensandolo bien el tigre sobrevive si esta casando en grupo','si','documentales',11),(7,'el clavado de la muerte','2021-11-07',NULL,'de 30 mts de altura hay atletas que se disponen a lograr tal record de clavados','si','solo deporte',12),(8,'mejor pelicula del siglo','2021-11-07',NULL,'creo por mi gusto que es Games of The Trones','si','peliculas',10),(9,'mirar para adelante con vivir','2021-11-07',NULL,'buenos documentales de national geographic','no','documentales',12),(11,'PEPE CENTURION','2021-11-08',NULL,'CORRIENDO CARRERAS POR EL AUTODROMO ALCANZÓ MUCHOS RECORDS EN CAMPEONATOS','no','solo deporte',8);
 /*!40000 ALTER TABLE `notas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,11 +85,11 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `usuarios` (
   `id_usuario` int NOT NULL AUTO_INCREMENT,
-  `nombre_usuario` varchar(15) NOT NULL,
+  `nombre_usuario` varchar(25) NOT NULL,
   `email_usuario` varchar(40) NOT NULL,
   PRIMARY KEY (`id_usuario`),
   UNIQUE KEY `id_usuario_UNIQUE` (`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +98,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Pedro Alfonso','pedroa@gmail.com'),(2,'Juan j. Ogando','juancho78@gmail.com'),(3,'Camila Centurion','tinkybell91@gmail.com'),(4,'Erica Martinez','ppipi@hotmail.com'),(5,'Jonny Bigboy','j.maxx@aol.com'),(6,'Pedro Alfonso','pedroa@gmail.com'),(7,'Ana Velazco','anavelez@gmail.com'),(8,'Teodoro Pitascho','teodoro99@hotmail.com'),(9,'Melisa Sanguinetti','meliseweet@aol.com'),(10,'Celeste Perez','calesita2001@pepe.com'),(11,'Ana Velazco','anavelez@gmail.com'),(12,'Teodoro Pitascho','teodoro99@hotmail.com'),(13,'Melisa Sanguinetti','meliseweet@aol.com'),(14,'Celeste Correa','celestequeen@gmail.com');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -108,7 +111,7 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-11-07 16:40:39
+-- Dump completed on 2021-11-08 12:49:37
 
 
 
@@ -238,6 +241,4 @@ SELECT * FROM NOTAS;
 
 SELECT * FROM usuarios;
 
-SELECT * categorias;
-
-
+SELECT * FROM categorias;
